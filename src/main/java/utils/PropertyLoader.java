@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * @author root
+ * @author Ivan Gladush
  * @since 15.04.16.
  */
 public class PropertyLoader {
-        private static final Logger log = Logger.getLogger(PropertyLoader.class);
+    private static final Logger log = Logger.getLogger(PropertyLoader.class);
     private static final String EXCEPTION_DOWNLOAD_PROPERTIES = "I can't download properties %s";
     private static final String EXCEPTION_PROPERTY_DONT_FOUND = "This property not exist";
     private Properties properties = new Properties();
@@ -19,7 +19,6 @@ public class PropertyLoader {
         properties.load(PropertyLoader.class.getClassLoader().getResource(fileName).openStream());
 
     }
-
 
     public static PropertyLoader getPropertyLoader(String fileName) {
         try {
@@ -38,5 +37,4 @@ public class PropertyLoader {
         }
         return property;
     }
-
 }

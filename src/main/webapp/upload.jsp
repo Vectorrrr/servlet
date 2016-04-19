@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: root
+  User: Ivan Gladush
   Date: 15.04.16
   Time: 17:08
   To change this template use File | Settings | File Templates.
@@ -15,8 +15,11 @@
 Укажите файл и нажмите отправить
 <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
     <p>
-    <h3> <input name="data" type="file"><br></h3>
-    <h3><input type="submit" value="Отправить"><br></h3>
+
+        Файл для загрузки: <input type="file" name="upfile"><br/>
+        Файл для загрузки: <input type="file" name="upfile"><br/>
+        Файл для загрузки: <input type="file" name="upfile"><br/>
+         <input type="submit" value="Отправить">
 
     <p/>
 </form>

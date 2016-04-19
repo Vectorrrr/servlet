@@ -3,6 +3,18 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+    <filter>
+        <filter-name>UploadsFileFilter</filter-name>
+        <filter-class>filtres.UploadsFileFilter</filter-class>
+        <init-param>
+            <param-name>active</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+    <filter-name>UploadsFileFilter</filter-name>
+    <servlet-name>uploadServlet</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>mainServlet</servlet-name>
         <servlet-class>servlets.RootServlet</servlet-class>
@@ -18,5 +30,13 @@
     <servlet-mapping>
         <servlet-name>uploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>downloadServlet</servlet-name>
+        <servlet-class>servlets.FileDownloader</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>downloadServlet</servlet-name>
+        <url-pattern>/download</url-pattern>
     </servlet-mapping>
 </web-app>

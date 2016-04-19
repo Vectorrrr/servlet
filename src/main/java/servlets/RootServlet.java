@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author root
+ * @author Ivan Gladush
  * @since 15.04.16.
  */
 public class RootServlet extends HttpServlet {

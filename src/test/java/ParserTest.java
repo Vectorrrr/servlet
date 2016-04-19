@@ -4,7 +4,7 @@ import parser.RequestParser;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * @author root
+ * @author Ivan Gladush
  * @since 18.04.16.
  */
 public class ParserTest {

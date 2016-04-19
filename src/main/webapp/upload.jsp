@@ -16,10 +16,8 @@
 <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
     <p>
 
-        Файл для загрузки: <input type="file" name="upfile"><br/>
-        Файл для загрузки: <input type="file" name="upfile"><br/>
-        Файл для загрузки: <input type="file" name="upfile"><br/>
-         <input type="submit" value="Отправить">
+        Файл для загрузки: <input type="file" name="upfile" multiple accept="text/plain"><br/>
+       <input type="submit" value="Отправить">
 
     <p/>
 </form>

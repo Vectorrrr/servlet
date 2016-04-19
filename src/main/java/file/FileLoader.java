@@ -1,6 +1,5 @@
 package file;
 
-import com.sun.istack.internal.Nullable;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -38,7 +37,6 @@ public class FileLoader {
     }
 
 
-    @Nullable
     private static FileBean containedInManifest(String fileName) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(MANIFEST_FILE_PATH))) {
             String s;

@@ -13,7 +13,7 @@
 <body>
 <h2>Это страница загрузки файла</h2>
 Укажите файл и нажмите отправить
-<form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
     <p>
 
         Файл для загрузки: <input type="file" name="upfile" multiple accept="text/plain"><br/>

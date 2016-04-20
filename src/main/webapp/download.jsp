@@ -13,7 +13,7 @@
     <title>Download Page</title>
 </head>
 <body>
-<form action="http://localhost:8080/download" method="get" >
+<form action="${pageContext.request.contextPath}/download" method="get" >
     <p>
         Для поиска файла введите строку
     <h3> <input name="name" type="text"><br></h3>
@@ -23,7 +23,7 @@
 </form>
 
 <c:forEach  items="${files}" var="num">
-    <form action="http://localhost:8080/download" method="get" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/download" method="get" enctype="multipart/form-data">
         <p>
         <h3> <input name="fileName" type="hidden" value="${num}"  >${num}</input><br></h3>
         <input name="hid" value="1" type="hidden">

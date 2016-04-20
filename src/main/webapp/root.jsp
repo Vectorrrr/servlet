@@ -14,9 +14,8 @@
 <h1>Главная</h1>
 <p> Этот сайт предназначен для важных вещей</p>
 <p>
-<h2>Для перехода на страницу отправки файла нажмите  <a href="/upload">здесь</a>
-<h2>Для загрузки файла нажмите  <a href="/download">здесь</a>
-</h2>
-</p>
+<h2>Для перехода на страницу отправки файла нажмите  <a href="${pageContext.request.contextPath}/upload">здесь</a>
+<h2>Для загрузки файла нажмите  <a href="${pageContext.request.contextPath}/download">здесь</a>
+</h2><p/>
 </body>
 </html>

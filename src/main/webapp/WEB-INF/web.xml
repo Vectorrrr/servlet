@@ -15,6 +15,7 @@
     <filter-name>UploadsFileFilter</filter-name>
     <servlet-name>uploadServlet</servlet-name>
     </filter-mapping>
+
     <servlet>
         <servlet-name>mainServlet</servlet-name>
         <servlet-class>servlets.RootServlet</servlet-class>
@@ -23,6 +24,7 @@
         <servlet-name>mainServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>uploadServlet</servlet-name>
         <servlet-class>servlets.UploadServlet</servlet-class>
@@ -31,6 +33,7 @@
         <servlet-name>uploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>downloadServlet</servlet-name>
         <servlet-class>servlets.FileDownloader</servlet-class>

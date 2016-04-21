@@ -1,5 +1,6 @@
 package file;
 
+import database.DbManager;
 import org.apache.log4j.Logger;
 import utils.PropertyLoader;
 
@@ -13,12 +14,12 @@ import java.util.List;
  */
 public class FileSaver implements AutoCloseable {
     private static final Logger logger = Logger.getLogger(FileSaver.class);
+    private static final DbManager DB_MANAGER=new DbManager();
     private static final PropertyLoader PROPERTY_LOADER = PropertyLoader.getPropertyLoader("file.configurations.properties");
     private static final String PATH_TO_DEF_DIR = PROPERTY_LOADER.property("path.to.default.directory");
-    private static final String MANIFEST_FILE_NAME = PATH_TO_DEF_DIR + "/" + PROPERTY_LOADER.property("manifest.file.name");
     private static final String COULD_NOT_CREATE_DEF_FOLDER = "Could not create a folder for saving files";
-    private static final String NEW_LINE = "\n";
     private static final String EMPTY_STRING = "";
+    private static final String CANT_SAVE_FILE_INFORMATION = "Cant save meta information about file in db";
 
     private BufferedOutputStream outputStream;
 
@@ -29,26 +30,29 @@ public class FileSaver implements AutoCloseable {
         }
     }
 
-    public FileSaver(String fileName, String contentType) throws IOException {
+    public FileSaver(String fileName, String contentType,String UserName) throws IOException {
+        saveInformationInDb(fileName, contentType, UserName);
+
+        outputStream = new BufferedOutputStream(new FileOutputStream(createNewFile(fileName)));
+    }
+
+    private void saveInformationInDb(String fileName, String contentType, String UserName) {
+        if(!DB_MANAGER.addNewFile(fileName,contentType,UserName)){
+            logger.warn(CANT_SAVE_FILE_INFORMATION);
+            throw new IllegalStateException(CANT_SAVE_FILE_INFORMATION);
+        }
+    }
+
+    private File createNewFile(String fileName) throws IOException {
         File f = new File(String.format("%s/%s", PATH_TO_DEF_DIR, fileName));
         if (!f.createNewFile()) {
             logger.warn(FAILED_CREATE_NEW_FILE);
             throw new IllegalStateException(DONT_CREATE_FILE);
         }
-
-        try (FileWriter fw = new FileWriter(MANIFEST_FILE_NAME, true)) {
-            writeLine(fileName, fw);
-            writeLine(contentType, fw);
-        }
-
-        outputStream = new BufferedOutputStream(new FileOutputStream(f));
+        return f;
     }
 
-    private void writeLine(String contentType, FileWriter fw) throws IOException {
-        fw.write(contentType);
-        fw.write(NEW_LINE);
-        fw.flush();
-    }
+
 
     public void saveInFile(byte[] content) throws IOException {
         outputStream.write(content);
@@ -61,16 +65,10 @@ public class FileSaver implements AutoCloseable {
         }
 
         List<String> answer = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(MANIFEST_FILE_NAME)))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.contains(needFileName)) {
-                    answer.add(line);
-                }
-                br.readLine();
+        for (String file : DB_MANAGER.getAllUploadFiles()) {
+            if (file.contains(needFileName)) {
+                answer.add(file);
             }
-        } catch (IOException e) {
-            logger.error(e.getMessage());
         }
         return answer;
     }

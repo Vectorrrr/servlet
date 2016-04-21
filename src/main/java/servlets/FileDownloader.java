@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static file.FileLoader.addFileContentInStream;
-import static file.FileLoader.getFile;
+import static file.FileLoaderServlet.addFileContentInStream;
+import static file.FileLoaderServlet.getFile;
 import static file.FileSaver.getDownloadsFileName;
 
 

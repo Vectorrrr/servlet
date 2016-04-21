@@ -11,15 +11,16 @@
     <title>Upload</title>
 </head>
 <body>
-<h2>Это страница загрузки файла</h2>
-Укажите файл и нажмите отправить
+<h2>This file download page</h2>
+Select the file and press send
 <form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
     <p>
-
-        Файл для загрузки: <input type="file" name="upfile" multiple accept="text/plain"><br/>
-       <input type="submit" value="Отправить">
-
+        File for upload: <input type="file" name="upfile" multiple accept="text/plain"><br/>
+        <input type="submit" value="Upload">
     <p/>
 </form>
+For go to the file download page click <a href="${pageContext.request.contextPath}/download"> here</a>
+
+<p>To return to the main page, click <a href="${pageContext.request.contextPath}/">here</a><br></p>
 </body>
 </html>

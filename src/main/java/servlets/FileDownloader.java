@@ -15,10 +15,13 @@ import static file.FileSaver.getDownloadsFileName;
 
 
 /**
+ * The class allows the user to send files to download
+ * and display the user a list of downloaded files
+ * using a specific filter
  * @author Ivan Gladush
  * @since 18.04.16.
  */
-public class FileDownloader extends HttpServlet{
+public class FileDownloader extends HttpServlet {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String ATTACHMENT_FILENAME_FORMAT = "attachment; filename=\"%s\"";
     private static final String FILES = "files";
@@ -45,6 +48,4 @@ public class FileDownloader extends HttpServlet{
         request.setAttribute(FILES, getDownloadsFileName(request.getParameter("name")));
         request.getRequestDispatcher("download.jsp").forward(request, response);
     }
-
-
 }

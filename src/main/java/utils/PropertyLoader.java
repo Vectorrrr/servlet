@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.Properties;
 
 /**
+ * Class allows you to download
+ * property resources in program
  * @author Ivan Gladush
  * @since 15.04.16.
  */

@@ -10,6 +10,9 @@ import javax.servlet.ServletOutputStream;
 import java.io.*;
 
 /**
+ * This class is designed to download files.
+ * He can write the contents of a particular
+ * file to a ServletOutputStream.
  * @author Ivan Gladush
  * @since 18.04.16.
  */
@@ -36,6 +39,7 @@ public class FileLoaderServlet {
             logger.error(String.format(EXCEPTION_ADD_FILE_CONTENT_IN_STREAM, e.getMessage()));
         }
     }
+
 
     private static File getFileFromBean(FileBean fileBean) {
         return new File(String.format("%s/%s", PATH_TO_DEF_DIR, fileBean.getFileName()));

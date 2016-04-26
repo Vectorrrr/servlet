@@ -1,6 +1,7 @@
 package servlets.authorization;
 
 import database.DbManager;
+import sender.EmailSender;
 import utils.PropertyLoader;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ *
+ * Class is designed for user registration.
  * @author Ivan Gladush
  * @since 20.04.16.
  */
@@ -25,22 +28,30 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         if (name == null || password == null || email == null) {
-            request.setAttribute("notCorrect","false");
+            request.setAttribute("notCorrect", "false");
             request.getRequestDispatcher("registration.jsp").forward(request, response);
             return;
         }
-        if (DB_MANAGER.isTempUser(name) || DB_MANAGER.isValidUser(name)) {
-            request.setAttribute("exist","false");
+        if (DB_MANAGER.isTempUser(name) || DB_MANAGER.thisLoginExist(name)) {
+            request.setAttribute("exist", "false");
             request.getRequestDispatcher("registration.jsp").forward(request, response);
             return;
         }
-        String secretKey=generateNewSecretKey();
+
+        String secretKey = generateNewSecretKey();
         if (!DB_MANAGER.addNewTempUser(name, password, secretKey)) {
             request.setAttribute("message", "I can't add this user in db, try again and change your login");
             request.getRequestDispatcher("registration.jsp").forward(request, response);
             return;
         }
 
+        sendComfirMessage(response, name, password, email, secretKey);
+    }
+
+    /**
+     * The method sends an email to the user to complete the registration
+     */
+    private void sendComfirMessage(HttpServletResponse response, String name, String password, String email, String secretKey) throws IOException {
         new EmailSender().addSubject("Please confirm your registration")
                 .setRecipient(email)
                 .addBody("Please confirm your registration in my site")
@@ -58,5 +69,4 @@ public class RegistrationServlet extends HttpServlet {
 
         return randString.toString();
     }
-
 }

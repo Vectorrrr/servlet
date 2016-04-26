@@ -14,6 +14,11 @@ import java.util.List;
 
 
 /**
+ * Class is a facade for FilesTable, TempUserTable and
+ * UserTable class It provides a convenient interface
+ * for working with the three methods. For implementation
+ * details, see the specific method of how this method is
+ * implemented in the appropriate class
  * @author Ivan Gladush
  * @since 19.04.16.
  */
@@ -81,20 +86,16 @@ public class DbManager implements Closeable {
         return DB_MANAGER;
     }
 
-    public boolean isValidUser(String session) {
-        return userTable.isValidUser(session);
-
+    public boolean thisLoginExist(String login) {
+        return userTable.thisLoginExist(login);
     }
 
     public boolean confirmUser(String userName, String password, String secretWord) {
         return tempUserTable.confirmUser(userName, password, secretWord);
-
-
     }
 
     public boolean addNewTempUser(String userName, String userPassword, String secretWord) {
         return tempUserTable.addNewUser(userName, userPassword, secretWord);
-
     }
 
     public boolean containsUser(String userName, String userPassword) {
@@ -103,22 +104,18 @@ public class DbManager implements Closeable {
 
     public boolean addNewFile(String fileName, String contentType, String userName) {
         return filesTable.addNewFile(fileName, contentType, userName);
-
     }
 
     public List<String> getAllUploadFiles() {
         return filesTable.getAllUploadFiles();
-
     }
 
     public FileBean getFileBean(String fileName) {
         return filesTable.getFileBean(fileName);
-
     }
 
     public boolean isTempUser(String name) {
         return tempUserTable.isTempUser(name);
-
     }
 
     public boolean addNewUser(String loginUser, String password) {

@@ -15,6 +15,7 @@ public class TempUserTable {
     private static final PropertyLoader PROPERTY_LOADER = PropertyLoader.getPropertyLoader("temp.user.database.query.properties");
 
     private static final String QUERY_FOR_GET_COUNT_USER_WITH_ID = PROPERTY_LOADER.property("count.user.with.this.id");
+
     private static final String EXCEPTION_CHECK_CONTAINS_USER = "Can't check contains this user in temp table or not because %s";
     private static final String EXCEPTION_ADD_NEW_USER = "I can't add new user in temp table because %s";
     private static final String EXCEPTION_DELETE_USER = "I can't delete user because %s";
@@ -63,7 +64,6 @@ public class TempUserTable {
         } catch (SQLException e) {
             logger.error(String.format(EXCEPTION_DELETE_USER,e.getMessage()));
         }
-
         return false;
     }
 

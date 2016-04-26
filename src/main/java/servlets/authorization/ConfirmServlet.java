@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * This class is designed to confirm the user registration
  * @author Ivan Gladush
  * @since 21.04.16.
  */

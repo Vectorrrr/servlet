@@ -21,12 +21,12 @@ public class ConnectionFactory {
     private static final String DB_DRIVER = PROPERTY_LOADER.property("db.driver.name");
     private static final String DATABASE_NAME = PROPERTY_LOADER.property("database.name");
     private static final String SHOW_DATABASE = PROPERTY_LOADER.property("show.database.query");
+    private static final String CREATE_DB_QUERY = PROPERTY_LOADER.property("create.database.query");
 
     private static final String DB_USER_NAME = PROPERTY_LOADER.property("db.user.name");
     private static final String DB_PASSWORD = PROPERTY_LOADER.property("db.user.password");
     private static final String DB_URL_ADDRESS = PROPERTY_LOADER.property("db.url.address");
 
-    private static final String CREATE_DB = PROPERTY_LOADER.property("create.database.query");
     private static final String EXCEPTION_WHEN_CREATE_DB = "Exception when I create db %s";
     private static final String EXCEPTION_INIT_DB = "I can't init db because %s";
 
@@ -43,7 +43,7 @@ public class ConnectionFactory {
             connectionToDataBase = createConnection();
         } catch (Exception e) {
             logger.error(String.format(EXCEPTION_WHEN_CREATE_DB,e.getMessage()));
-            throw new IllegalStateException(String.format(EXCEPTION_INIT_DB + e.getMessage()));
+            throw new IllegalStateException(String.format(EXCEPTION_INIT_DB , e.getMessage()));
 
 
         }
@@ -76,7 +76,7 @@ public class ConnectionFactory {
                     return;
                 }
             }
-            sql.execute(CREATE_DB);
+            sql.execute(CREATE_DB_QUERY);
         }
     }
 

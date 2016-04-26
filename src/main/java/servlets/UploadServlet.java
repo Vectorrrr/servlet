@@ -22,6 +22,8 @@ import java.util.List;
 import static org.apache.commons.fileupload.servlet.ServletFileUpload.*;
 
 /**
+ * The class allows the user to save
+ * files sent from the browser to the server
  * @author Ivan Gladush
  * @since 15.04.16.
  */
@@ -58,8 +60,8 @@ public class UploadServlet extends HttpServlet {
     }
 
     private String getUserName(HttpServletRequest request) {
-        for(Cookie cookie:request.getCookies()){
-            if(SESSION.equals(cookie.getName())){
+        for (Cookie cookie : request.getCookies()) {
+            if (SESSION.equals(cookie.getName())) {
                 return cookie.getValue();
             }
         }
@@ -75,9 +77,9 @@ public class UploadServlet extends HttpServlet {
         return new ServletFileUpload(factory);
     }
 
-    private void saveFiles(List<FileItem> items,String userName) throws IOException {
+    private void saveFiles(List<FileItem> items, String userName) throws IOException {
         for (FileItem item : items) {
-            try (FileSaver fileSaver = new FileSaver(item.getName(), item.getContentType(),userName)) {
+            try (FileSaver fileSaver = new FileSaver(item.getName(), item.getContentType(), userName)) {
                 fileSaver.saveInFile(item.get());
             }
         }

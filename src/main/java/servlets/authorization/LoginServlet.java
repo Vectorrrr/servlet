@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * This class is designed to authenticate the user on the site.
+ * If the user enters a non-existing username and password, it
+ * automatically switches to the registration page. If he enters
+ * the data, it is assigned a certain cookies, which allows it to
+ * uniquely identify the site
  * @author Ivan Gladush
  * @since 20.04.16.
  */

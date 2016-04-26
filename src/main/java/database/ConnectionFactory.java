@@ -44,8 +44,6 @@ public class ConnectionFactory {
         } catch (Exception e) {
             logger.error(String.format(EXCEPTION_WHEN_CREATE_DB,e.getMessage()));
             throw new IllegalStateException(String.format(EXCEPTION_INIT_DB , e.getMessage()));
-
-
         }
     }
 
@@ -76,7 +74,7 @@ public class ConnectionFactory {
                     return;
                 }
             }
-            sql.execute(CREATE_DB_QUERY);
+            sql.execute(String.format(CREATE_DB_QUERY,DATABASE_NAME));
         }
     }
 

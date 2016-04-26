@@ -14,7 +14,7 @@ import java.io.IOException;
  * @since 20.04.16.
  */
 public class LoginServlet extends HttpServlet {
-    private static final DbManager DB_MANAGER = new DbManager();
+    private static final DbManager DB_MANAGER = DbManager.getDbManager();
     private static final String EMPTY_STRING = "";
 
     @Override
@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void addCookie(HttpServletResponse response, String session) {
-        Cookie cookie= new Cookie("session", session);
+        Cookie cookie = new Cookie("session", session);
         cookie.setMaxAge(-1);
         response.addCookie(cookie);
     }
@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         String userName = request.getParameter("name");
         String userPassword = request.getParameter("password");
         if (userName != null && userPassword != null) {
-            if( DB_MANAGER.containsUser(userName, userPassword)){
+            if (DB_MANAGER.containsUser(userName, userPassword)) {
                 return userName;
             }
         }

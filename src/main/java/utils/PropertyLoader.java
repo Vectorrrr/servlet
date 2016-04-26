@@ -23,14 +23,12 @@ public class PropertyLoader {
     private PropertyLoader(String fileName) throws IOException {
         URL url = PropertyLoader.class.getClassLoader().getResource(fileName);
         if (url != null) {
-            InputStream inputStream=url.openStream();
+            InputStream inputStream = url.openStream();
             properties.load(inputStream);
             IOUtils.closeQuietly(inputStream);
-        }
-        else{
+        } else {
             throw new FileNotFoundException(CANT_FOUND_RESOURCE_FILE);
         }
-
     }
 
     public static PropertyLoader getPropertyLoader(String fileName) {
@@ -43,7 +41,7 @@ public class PropertyLoader {
     }
 
     public String property(String propertyKey) {
-        String property = (String) properties.get(propertyKey);
+        String property = properties.getProperty(propertyKey);
         if (property == null) {
             logger.error(EXCEPTION_PROPERTY_DONT_FOUND);
             throw new IllegalStateException(EXCEPTION_PROPERTY_DONT_FOUND);

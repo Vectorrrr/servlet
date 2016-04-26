@@ -8,7 +8,7 @@ public class FileBean {
     private String contentType;
     private String fileName;
 
-    public FileBean(String fileName , String contentType) {
+    public FileBean(String fileName, String contentType) {
         this.contentType = contentType;
         this.fileName = fileName;
     }
@@ -20,6 +20,4 @@ public class FileBean {
     public String getFileName() {
         return fileName;
     }
-
-
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 19.04.16.
  */
 public class UploadsFileFilter implements Filter {
-    private static final DbManager DB_MANAGER = new DbManager();
+    private static final DbManager DB_MANAGER = DbManager.getDbManager();
     private static final String TRUE = "TRUE";
     private static final String SESSION = "session";
     private FilterConfig filterConfig = null;

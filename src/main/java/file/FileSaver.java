@@ -14,32 +14,35 @@ import java.util.List;
  */
 public class FileSaver implements AutoCloseable {
     private static final Logger logger = Logger.getLogger(FileSaver.class);
-    private static final DbManager DB_MANAGER=new DbManager();
+    private static final DbManager DB_MANAGER= DbManager.getDbManager();
     private static final PropertyLoader PROPERTY_LOADER = PropertyLoader.getPropertyLoader("file.configurations.properties");
     private static final String PATH_TO_DEF_DIR = PROPERTY_LOADER.property("path.to.default.directory");
-    private static final String COULD_NOT_CREATE_DEF_FOLDER = "Could not create a folder for saving files";
+
+    private static final String EXCEPTION_SAVE_META_INFORMATION_ABOUT_FILE = "Cant save meta information about file in db";
+    private static final String EXCEPTION_CREATE_FOLDER = "Could not create a folder for saving files";
+    private static final String EXCEPTION_CREATE_FILE = "I don't create a new file for download this document";
+    private static final String FAILED_CREATE_NEW_FILE = "Failed to create a new file to save resources";
+
     private static final String EMPTY_STRING = "";
-    private static final String CANT_SAVE_FILE_INFORMATION = "Cant save meta information about file in db";
 
     private BufferedOutputStream outputStream;
 
     static {
         File defDir = new File(PATH_TO_DEF_DIR);
         if (!defDir.exists() && !defDir.mkdirs()) {
-            logger.warn(COULD_NOT_CREATE_DEF_FOLDER);
+            logger.warn(EXCEPTION_CREATE_FOLDER);
         }
     }
 
     public FileSaver(String fileName, String contentType,String UserName) throws IOException {
         saveInformationInDb(fileName, contentType, UserName);
-
         outputStream = new BufferedOutputStream(new FileOutputStream(createNewFile(fileName)));
     }
 
     private void saveInformationInDb(String fileName, String contentType, String UserName) {
         if(!DB_MANAGER.addNewFile(fileName,contentType,UserName)){
-            logger.warn(CANT_SAVE_FILE_INFORMATION);
-            throw new IllegalStateException(CANT_SAVE_FILE_INFORMATION);
+            logger.warn(EXCEPTION_SAVE_META_INFORMATION_ABOUT_FILE);
+            throw new IllegalStateException(EXCEPTION_SAVE_META_INFORMATION_ABOUT_FILE);
         }
     }
 
@@ -47,7 +50,7 @@ public class FileSaver implements AutoCloseable {
         File f = new File(String.format("%s/%s", PATH_TO_DEF_DIR, fileName));
         if (!f.createNewFile()) {
             logger.warn(FAILED_CREATE_NEW_FILE);
-            throw new IllegalStateException(DONT_CREATE_FILE);
+            throw new IllegalStateException(EXCEPTION_CREATE_FILE);
         }
         return f;
     }
@@ -63,7 +66,6 @@ public class FileSaver implements AutoCloseable {
         if (needFileName == null) {
             needFileName = EMPTY_STRING;
         }
-
         List<String> answer = new ArrayList<>();
         for (String file : DB_MANAGER.getAllUploadFiles()) {
             if (file.contains(needFileName)) {
@@ -80,7 +82,5 @@ public class FileSaver implements AutoCloseable {
         }
     }
 
-    private static final String DONT_CREATE_FILE = "I don't create a new file for download this document";
-    private static final String FAILED_CREATE_NEW_FILE = "Failed to create a new file to save resources";
 
 }

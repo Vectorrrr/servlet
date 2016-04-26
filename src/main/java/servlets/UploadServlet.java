@@ -36,7 +36,6 @@ public class UploadServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("upload.jsp").forward(request, response);
-
     }
 
     @Override
@@ -50,9 +49,9 @@ public class UploadServlet extends HttpServlet {
 
     private void downloadFileInServer(HttpServletRequest request) throws IOException {
         ServletFileUpload upload = getServletFileUpload();
-        String userName= getUserName(request);
+        String userName = getUserName(request);
         try {
-            saveFiles(upload.parseRequest(request),userName);
+            saveFiles(upload.parseRequest(request), userName);
         } catch (FileUploadException e) {
             logger.error(EXCEPTION_SAVE_FILE);
         }

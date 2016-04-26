@@ -13,21 +13,29 @@
 </head>
 <body>
 <h1>Please register</h1>
-<c:if test="${name!=null}">
-    <p>You input not exist value login or password: <c:out value="${name}"/><p>
+<c:if test="${notCorrect!=null}">
+    <p>You input not correct value login or password. Please try again.></p>
+</c:if>
+<c:if test="${exist!=null}">
+    <p>You input exist user login. Please change your login <p>
 </c:if>
 
 <form action="${pageContext.request.contextPath}/registration" method="get">
-    <div class="form-group">
+    <div class="form-group" style="padding-top:5px">
         <label for="name">User Name:</label>
-        <input type="text" class="form-control" id="name" name="name" required>
+        <input type="text" class="form-control" id="name" name="name" required autocomplete="off">
     </div>
-    <br/>
-    <div class="form-group">
+
+    <div class="form-group" style="padding-top:5px ">
         <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+        <input type="password" class="form-control" id="password" name="password" required autocomplete="off">
     </div>
-    <button type="submit" class="btn btn-success">Login</button>
+
+    <div class="form-group" style="padding-top: 5px; padding-bottom: 5px">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
+    </div>
+    <button type="submit" class="btn btn-success"  >Registration</button>
 </form>
 
 <p>To return to the main page, click <a href="${pageContext.request.contextPath}/">here</a><br></p>

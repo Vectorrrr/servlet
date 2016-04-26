@@ -17,6 +17,14 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>confirmServlet</servlet-name>
+        <servlet-class>servlets.authorization.ConfirmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>confirmServlet</servlet-name>
+        <url-pattern>/confirm</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>registrationServlet</servlet-name>
         <servlet-class>servlets.authorization.RegistrationServlet</servlet-class>
     </servlet>

@@ -1,6 +1,7 @@
 package servlets.authorization;
 
 import database.DbManager;
+import utils.PropertyLoader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -14,20 +15,48 @@ import java.io.IOException;
  * @since 20.04.16.
  */
 public class RegistrationServlet extends HttpServlet {
-    private static final DbManager DB_MANAGER=new DbManager();
+    private static final DbManager DB_MANAGER = DbManager.getDbManager();
+    private static final PropertyLoader PROPERTY_LOADER = PropertyLoader.getPropertyLoader("file.configurations.properties");
+    private static final String QUERY_SKELETON = PROPERTY_LOADER.property("skeleton.for.url");
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name=request.getParameter("name");
-        String password=request.getParameter("password");
-        if(name==null || password==null ||!DB_MANAGER.addNewUser(name,password)){
-            request.getRequestDispatcher("registration.jsp").forward(request,response);
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        if (name == null || password == null || email == null) {
+            request.setAttribute("notCorrect","false");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
             return;
         }
-        response.addCookie(new Cookie("session",name));
+        if (DB_MANAGER.isTempUser(name) || DB_MANAGER.isValidUser(name)) {
+            request.setAttribute("exist","false");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
+        String secretKey=generateNewSecretKey();
+        if (!DB_MANAGER.addNewTempUser(name, password, secretKey)) {
+            request.setAttribute("message", "I can't add this user in db, try again and change your login");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
+
+        new EmailSender().addSubject("Please confirm your registration")
+                .setRecipient(email)
+                .addBody("Please confirm your registration in my site")
+                .addBody("\n\n")
+                .addBody(String.format(QUERY_SKELETON, name, password, secretKey)).sendMessage();
+
+        response.addCookie(new Cookie("session", name));
         response.sendRedirect("/");
-
-
     }
 
+    private String generateNewSecretKey() {
+        StringBuilder randString = new StringBuilder();
+        for (int i = 0; i < 16; i++)
+            randString.append((char) ((Math.random() * 100) % 25 + 97));
+
+        return randString.toString();
+    }
 
 }

@@ -17,10 +17,9 @@
         <label for="name">User Name:</label>
         <input type="text" class="form-control" id="name" name="name" required>
     </div>
-    <br/>
-    <div class="form-group">
+    <div class="form-group" style="padding-top:5px">
         <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+        <input type="password" class="form-control" id="password" name="password" required autocomplete="off">
     </div>
     <button type="submit" class="btn btn-default">Login</button>
 </form>

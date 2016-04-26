@@ -13,28 +13,26 @@ import java.io.IOException;
  * @since 15.04.16.
  */
 public class RootServlet extends HttpServlet {
-
     private static final String EMPTY_STRING = "";
     private static final String SESSION = "session";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("name",getUserName(request));
+        request.setAttribute("name", getUserName(request));
         request.getRequestDispatcher("root.jsp").forward(request, response);
-
-
     }
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("name","");
-        deleteSessionInformation(request,response);
+        request.setAttribute("name", "");
+        deleteSessionInformation(request, response);
         response.sendRedirect("/");
     }
 
-    private void deleteSessionInformation(HttpServletRequest request,HttpServletResponse response) {
-        for(Cookie c:request.getCookies()){
-            if(SESSION.equals(c.getName())){
+    private void deleteSessionInformation(HttpServletRequest request, HttpServletResponse response) {
+        for (Cookie c : request.getCookies()) {
+            if (SESSION.equals(c.getName())) {
                 c.setValue("");
                 c.setMaxAge(0);
                 response.addCookie(c);
@@ -43,12 +41,11 @@ public class RootServlet extends HttpServlet {
     }
 
     private String getUserName(HttpServletRequest request) {
-        for(Cookie c:request.getCookies()){
-            if(SESSION.equals(c.getName())){
+        for (Cookie c : request.getCookies()) {
+            if (SESSION.equals(c.getName())) {
                 return c.getValue();
             }
         }
         return EMPTY_STRING;
-
     }
 }

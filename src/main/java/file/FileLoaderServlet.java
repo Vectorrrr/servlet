@@ -15,12 +15,13 @@ import java.io.*;
  */
 public class FileLoaderServlet {
     private static final Logger logger = Logger.getLogger(FileLoaderServlet.class);
+    private static final DbManager DB_MANAGER = DbManager.getDbManager();
     private static final PropertyLoader PROPERTY_LOADER = PropertyLoader.getPropertyLoader("file.configurations.properties");
     private static final String PATH_TO_DEF_DIR = PROPERTY_LOADER.property("path.to.default.directory");
     private static final String EMPTY_STRING = "";
 
     public static FileBean getFile(String fileName) {
-        FileBean fileBean = DbManager.getFileBean(fileName);
+        FileBean fileBean = DB_MANAGER.getFileBean(fileName);
         if (fileBean == null) {
             return new FileBean(EMPTY_STRING, EMPTY_STRING);
         }
@@ -41,5 +42,4 @@ public class FileLoaderServlet {
     }
 
     private static final String EXCEPTION_ADD_FILE_CONTENT_IN_STREAM = "When I added file content in stream I have exception %s";
-
 }
